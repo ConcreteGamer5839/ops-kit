@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redeem your code: Self-Publishing Ops Kit</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --ink:#1d2430; --muted:#5b6575; --line:#e3e7ee; --bg:#fbfaf7; --accent:#0f6b5c; --bad:#a3271f; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  .wrap { max-width:560px; margin:0 auto; padding:48px 20px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; margin-bottom:28px; }
+  .brand img { width:36px; height:36px; border-radius:8px; }
+  h1 { font-size:30px; line-height:1.2; margin:0 0 10px; }
+  p { color:var(--muted); }
+  label { display:block; font-weight:600; margin:22px 0 6px; }
+  input { width:100%; font:inherit; padding:12px 14px; border:1.5px solid var(--line); border-radius:8px; background:#fff; letter-spacing:.04em; text-transform:uppercase; }
+  input:focus { outline:none; border-color:var(--accent); }
+  button { margin-top:14px; width:100%; font:inherit; font-weight:600; padding:13px; border:0; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; }
+  button[disabled] { opacity:.6; cursor:wait; }
+  #msg { min-height:1.6em; margin-top:14px; font-size:15.5px; }
+  #msg.bad { color:var(--bad); }
+  #msg.good { color:var(--accent); }
+  .small { font-size:14px; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><img src="icon.png" alt=""> Self-Publishing Ops Kit</div>
+  <h1>Redeem your code</h1>
+  <p>Enter the code from your AppSumo account (Account, then Products). Your download starts right away. Open "Start Here.pdf" first.</p>
+  <form id="f" autocomplete="off">
+    <label for="code">Redemption code</label>
+    <input id="code" name="code" placeholder="SPOK..." required maxlength="40">
+    <button id="go" type="submit">Download the kit</button>
+  </form>
+  <div id="msg" role="status"></div>
+  <p class="small">Trouble redeeming? Email <a href="mailto:walter@chickenandairlinemiles.com?subject=Ops%20Kit%20redemption">walter@chickenandairlinemiles.com</a> with your code and we'll send the files.</p>
+  <p class="small"><a href="./">Back to the kit page</a></p>
+</div>
+<script>
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const hex = buf => [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, '0')).join('');
+const msg = document.getElementById('msg'), btn = document.getElementById('go');
+function say(t, cls) { msg.textContent = t; msg.className = cls || ''; }
+document.getElementById('f').addEventListener('submit', async e => {
+  e.preventDefault();
+  const code = document.getElementById('code').value.trim().toUpperCase().replace(/\s+/g, '');
+  if (!code) return;
+  btn.disabled = true; say('Checking your code...');
+  try {
+    const data = await (await fetch('keys.json', {cache: 'no-store'})).json();
+    const id = hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('id:' + code))).slice(0, 20);
+    const wrapped = data.keys[id];
+    if (!wrapped) { say("That code wasn't recognized. Check for typos, or email us and we'll sort it out.", 'bad'); btn.disabled = false; return; }
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey']);
+    const kc = await crypto.subtle.deriveKey({name: 'PBKDF2', salt: b64(data.salt), iterations: data.iter, hash: 'SHA-256'}, base, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
+    const w = b64(wrapped);
+    const rawK = await crypto.subtle.decrypt({name: 'AES-GCM', iv: w.slice(0, 12)}, kc, w.slice(12));
+    const K = await crypto.subtle.importKey('raw', rawK, 'AES-GCM', false, ['decrypt']);
+    say('Code accepted. Preparing your download...', 'good');
+    const blob = new Uint8Array(await (await fetch('kit.bin', {cache: 'no-store'})).arrayBuffer());
+    const zip = await crypto.subtle.decrypt({name: 'AES-GCM', iv: blob.slice(0, 12)}, K, blob.slice(12));
+    const url = URL.createObjectURL(new Blob([zip], {type: 'application/zip'}));
+    const a = document.createElement('a'); a.href = url; a.download = 'Self-Publishing Ops Kit.zip';
+    document.body.appendChild(a); a.click(); a.remove();
+    say('Your download has started. Keep your code: you can come back and download again any time.', 'good');
+  } catch (err) {
+    say('Something went wrong on our side. Email us with your code and we will send the files.', 'bad');
+  }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>
