@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Publishing Ops Kit: KDP guide, calculators and checklists</title>
+<meta name="description" content="A 34-page Amazon KDP publishing guide plus a cover calculator, royalty and ads tracker, metadata worksheet, checklists and templates. Run every book release the same way.">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --ink:#1d2430; --muted:#5b6575; --line:#e3e7ee; --bg:#fbfaf7; --card:#ffffff; --accent:#0f6b5c; --accent2:#e7f3f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  a { color:var(--accent); }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 20px; }
+  header { padding:20px 0; border-bottom:1px solid var(--line); background:#fff; }
+  header .wrap { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; }
+  .brand img { width:36px; height:36px; border-radius:8px; }
+  .btn { display:inline-block; background:var(--accent); color:#fff; padding:12px 22px; border-radius:8px; text-decoration:none; font-weight:600; }
+  .btn.ghost { background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
+  .hero { padding:56px 0 32px; }
+  .hero h1 { font-size:clamp(30px,5vw,46px); line-height:1.15; margin:0 0 16px; max-width:780px; }
+  .hero p.lead { font-size:20px; color:var(--muted); max-width:720px; margin:0 0 24px; }
+  .hero .cta { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .note { font-size:14px; color:var(--muted); }
+  .shot { width:100%; border-radius:12px; border:1px solid var(--line); background:#fff; box-shadow:0 6px 24px rgba(20,30,50,.06); }
+  section { padding:40px 0; }
+  h2 { font-size:28px; margin:0 0 18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; }
+  .card h3 { margin:0 0 6px; font-size:18px; }
+  .card p { margin:0; color:var(--muted); font-size:15.5px; }
+  .feature { display:grid; grid-template-columns:1fr 1.2fr; gap:28px; align-items:center; margin:28px 0; }
+  .feature:nth-child(even) { grid-template-columns:1.2fr 1fr; }
+  .feature:nth-child(even) .txt { order:2; }
+  @media (max-width:760px){ .feature, .feature:nth-child(even){ grid-template-columns:1fr; } .feature:nth-child(even) .txt{ order:0; } }
+  ul.ticks { padding-left:0; list-style:none; }
+  ul.ticks li { padding-left:28px; position:relative; margin:6px 0; }
+  ul.ticks li:before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .band { background:var(--accent2); }
+  details { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:10px 0; }
+  summary { font-weight:600; cursor:pointer; }
+  footer { border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><img src="icon.png" alt=""> Self-Publishing Ops Kit</div>
+    <a class="btn" href="#get">Get the kit</a>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <h1>Publish on Amazon KDP without guessing at the dashboard.</h1>
+  <p class="lead">A 34-page guide plus the spreadsheets, checklists and templates it refers to. Read it once, then run every release from the files.</p>
+  <div class="cta">
+    <a class="btn" href="#get">Get the kit</a>
+    <a class="btn ghost" href="#inside">See what's inside</a>
+  </div>
+  <p class="note">Rules checked against KDP Help on 1 October 2026. Free updates to this edition.</p>
+  <img class="shot" src="guide.jpg" alt="The KDP Publishing Operations Guide cover and interior pages">
+</div>
+
+<section class="band">
+  <div class="wrap">
+    <h2>The fiddly parts, written down</h2>
+    <div class="grid">
+      <div class="card"><h3>Seven keyword boxes</h3><p>What goes in them, what KDP bans, and a worksheet that counts characters for you.</p></div>
+      <div class="card"><h3>Cover files that fit</h3><p>Spine width and full-wrap size from page count and paper type, in inches, mm and pixels.</p></div>
+      <div class="card"><h3>Royalty math that's current</h3><p>Built on the 2026 rules, including the July 2026 change that raised the 70% eBook ceiling to $12.99.</p></div>
+      <div class="card"><h3>EPUBs that don't lose chapters</h3><p>A validation chapter plus a preflight script that catches what epubcheck lets through.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <h2>What's inside</h2>
+    <div class="feature">
+      <div class="txt">
+        <h3>KDP Publishing Operations Guide (PDF, 34 pages)</h3>
+        <p>The whole run from locked manuscript to a live, correctly priced listing: EPUB build and validation, print margins, cover math, metadata, royalties, KDP Select and promotions, A+ Content, series setup, AI-disclosure rules, launch sequence and the weekly numbers to track. Every rule cites the KDP Help page and the date it was checked.</p>
+      </div>
+      <img class="shot" src="guide.jpg" alt="Guide pages">
+    </div>
+    <div class="feature">
+      <div class="txt">
+        <h3>Cover Dimension Calculator (Excel / Google Sheets)</h3>
+        <p>Enter trim size, page count and paper. Get spine width, full wrap size, a spine-text check and the print cost, using KDP's published paper factors.</p>
+      </div>
+      <img class="shot" src="cover-calc.jpg" alt="Cover calculator spreadsheet">
+    </div>
+    <div class="feature">
+      <div class="txt">
+        <h3>Royalty and Ads Tracker (Excel / Google Sheets)</h3>
+        <p>Royalty per sale for eBook and paperback, a weekly log, ACOS and break-even ACOS, a read-through check and a price what-if. Every rate sits on one Settings sheet, so a rule change is a one-cell update.</p>
+      </div>
+      <img class="shot" src="royalty.jpg" alt="Royalty and ads tracker">
+    </div>
+    <div class="feature">
+      <div class="txt">
+        <h3>Launch and pre-upload checklists</h3>
+        <p>Print them or edit them in Word or Google Docs. The pre-upload list is the one that stops a broken file from going live.</p>
+      </div>
+      <img class="shot" src="checklists.jpg" alt="Launch and QA checklists">
+    </div>
+    <div class="feature">
+      <div class="txt">
+        <h3>Templates and a bonus EPUB checker</h3>
+        <p>A series bible template, five ARC and review outreach emails that stay inside Amazon's review rules, a KDP metadata worksheet, and an optional Python script that runs epubcheck and flags fake language codes, missing TOC entries and leftover placeholders.</p>
+      </div>
+      <img class="shot" src="templates.jpg" alt="Templates and EPUB preflight output">
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap grid">
+    <div>
+      <h2>Who it's for</h2>
+      <ul class="ticks">
+        <li>Indie authors publishing eBooks and paperbacks on Amazon KDP</li>
+        <li>Authors with a series who need continuity and a repeatable launch</li>
+        <li>Small presses and assistants publishing for more than one author</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Who it's not for</h2>
+      <p>Anyone looking for a writing course or an income promise. This kit is about publishing a book correctly. It doesn't promise sales.</p>
+    </div>
+  </div>
+</section>
+
+<section id="get">
+  <div class="wrap">
+    <h2>Get the kit</h2>
+    <p>One-time purchase. Instant download. Works in Excel, Google Sheets, Numbers and LibreOffice; documents open in Word or Google Docs.</p>
+    <p><a class="btn" id="buy" href="mailto:walter@chickenandairlinemiles.com?subject=Self-Publishing%20Ops%20Kit">Buy link coming soon. Email to reserve a copy</a></p>
+    <p class="note">60-day refund policy. Support by email in English, usually within one business day.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Questions</h2>
+    <details><summary>Is this for beginners?</summary><p>Yes, if you've finished a manuscript. The guide explains each step from scratch. Experienced authors usually get the most from the EPUB validation chapter, the royalty spreadsheet and the checklists.</p></details>
+    <details><summary>Do I need Excel?</summary><p>No. The spreadsheets work in Excel, Google Sheets, Apple Numbers and LibreOffice.</p></details>
+    <details><summary>Is it up to date?</summary><p>Rules were checked against KDP Help on 1 October 2026, including the July 2026 eBook pricing change and the June 2025 paperback royalty change. Appendix A lists every source.</p></details>
+    <details><summary>Does it cover paperbacks and hardcovers?</summary><p>Paperbacks in full. Hardcover follows the same process with different cover and printing-cost tables, which the guide points to.</p></details>
+    <details><summary>Does it cover AI-written books?</summary><p>It covers KDP's AI-disclosure rules so you answer those questions correctly. It isn't a guide to producing books with AI.</p></details>
+    <details><summary>Is this affiliated with Amazon?</summary><p>No. It's an independent product. Amazon, Kindle and KDP are trademarks of Amazon.com, Inc.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Self-Publishing Ops Kit · Support: <a href="mailto:walter@chickenandairlinemiles.com">walter@chickenandairlinemiles.com</a> · Not affiliated with Amazon.
+  </div>
+</footer>
+</body>
+</html>
